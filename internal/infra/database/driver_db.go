@@ -25,6 +25,11 @@ func (d *Driver) FindByEmail(email string) (*entity.Driver, error) {
 	return &driver, nil
 }
 
+func (v *Driver) FindByID(id string) (*entity.Driver, error) {
+	var driver entity.Driver
+	err := v.DB.Where("id = ?", id).Error
+	return &driver, err
+}
 func (d *Driver) GetAllDrivers() ([]entity.Driver, error) {
 	var drivers []entity.Driver
 	if err := d.DB.Find(&drivers).Error; err != nil {
@@ -38,5 +43,5 @@ func (d *Driver) Update(driver *entity.Driver) error {
 }
 
 func (d *Driver) Delete(id string) error {
-	return d.DB.Delete(&entity.Driver{}, id).Error
+	return d.DB.Delete(&entity.Driver{}, "id = ?", id).Error
 }

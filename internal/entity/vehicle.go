@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -22,6 +23,7 @@ type Vehicle struct {
 	Model    string    `json:"model"`
 	Year     int       `json:"year"`
 	DriverID uuid.UUID `json:"driver_id"`
+	CreateAt time.Time `json:"created_at"`
 }
 
 func NewVehicle(brand, model string, year int, driverID uuid.UUID) (*Vehicle, error) {

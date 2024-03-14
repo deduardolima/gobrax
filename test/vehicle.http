@@ -1,0 +1,39 @@
+
+POST http://localhost:8080/vehicles HTTP/1.1
+Content-Type: application/json
+
+{
+  "brand": "Scania",
+  "model": "RG20",
+  "year": 2013,
+  "driverid": "5d1sa5d1sa5d1sa5d1s5a"
+}
+
+###
+GET  http://localhost:8080/vehicles  HTTP/1.1
+Content-Type: application/json
+
+###
+GET  http://localhost:8080/vehicles/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "brand": "Scania",
+  "model": "RG20",
+  "year": 2013
+}
+
+
+###
+PUT  http://localhost:8080/vehicles/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "brand": "Volvo",
+  "model": "Upadate",
+  "year": 2016
+}
+
+###
+DELETE http://localhost:8080/vehicles/  HTTP/1.1
+Content-Type: application/json
