@@ -1,0 +1,10 @@
+
+POST http://localhost:8080/drivers HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Edu",
+  "email": "edu@email.com",
+  "password": "123456",
+ 
+}

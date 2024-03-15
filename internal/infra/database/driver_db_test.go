@@ -77,23 +77,53 @@ func TestFindDriverByID(t *testing.T) {
 	assert.Equal(t, expected.ID, driver.ID)
 }
 
-func TestGetAllDrivers(t *testing.T) {
+/*
+	func TestGetAllDrivers(t *testing.T) {
+		db := setupDatabase(t)
+		repo := database.NewDriver(db)
+
+		expected1 := entity.Driver{ID: uuid.New(), Name: "Driver 1", Email: "driver1@email.com", Password: "123456"}
+		expected2 := entity.Driver{ID: uuid.New(), Name: "Driver 2", Email: "driver2@email.com", Password: "123"}
+		expected3 := entity.Driver{ID: uuid.New(), Name: "Driver 3", Email: "driver3@email.com", Password: "123789"}
+
+		_ = db.Create(&expected1)
+		_ = db.Create(&expected2)
+		_ = db.Create(&expected3)
+
+		drivers, err := repo.GetAllDrivers()
+		assert.NoError(t, err)
+		assert.Len(t, drivers, 3)
+
+		// Sua lógica de asserção continua aqui...
+	}
+*/
+func TestFindAllDrivers(t *testing.T) {
 	db := setupDatabase(t)
-	repo := database.NewDriver(db)
 
-	expected1 := entity.Driver{ID: uuid.New(), Name: "Driver 1", Email: "driver1@email.com", Password: "123456"}
-	expected2 := entity.Driver{ID: uuid.New(), Name: "Driver 2", Email: "driver2@email.com", Password: "123"}
-	expected3 := entity.Driver{ID: uuid.New(), Name: "Driver 3", Email: "driver3@email.com", Password: "123789"}
+	for i := 1; i < 24; i++ {
+		driver, err := entity.NewDriver(fmt.Sprintf("Motorista%d", i), fmt.Sprintf("email%d@example.com", i), "123456")
+		assert.NoError(t, err)
+		result := db.Create(driver)
+		assert.NoError(t, result.Error)
+	}
+	driverDB := database.NewDriver(db)
+	drivers, err := driverDB.FindAll(1, 10, "asc")
+	assert.NoError(t, err)
+	assert.Len(t, drivers, 10)
+	assert.Equal(t, "Motorista1", drivers[0].Name)
+	assert.Equal(t, "Motorista10", drivers[9].Name)
 
-	_ = db.Create(&expected1)
-	_ = db.Create(&expected2)
-	_ = db.Create(&expected3)
+	drivers, err = driverDB.FindAll(2, 10, "asc")
+	assert.NoError(t, err)
+	assert.Len(t, drivers, 10)
+	assert.Equal(t, "Motorista11", drivers[0].Name)
+	assert.Equal(t, "Motorista20", drivers[9].Name)
 
-	drivers, err := repo.GetAllDrivers()
+	drivers, err = driverDB.FindAll(3, 10, "asc")
 	assert.NoError(t, err)
 	assert.Len(t, drivers, 3)
-
-	// Sua lógica de asserção continua aqui...
+	assert.Equal(t, "Motorista21", drivers[0].Name)
+	assert.Equal(t, "Motorista23", drivers[2].Name)
 }
 
 func TestUpdateDriver(t *testing.T) {

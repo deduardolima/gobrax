@@ -8,3 +8,14 @@ type CreateVehicleInput struct {
 	Year     int       `json:"year"`
 	DriverID uuid.UUID `json:"driver_id"`
 }
+
+type CreateDriverInput struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type GetJWTInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}

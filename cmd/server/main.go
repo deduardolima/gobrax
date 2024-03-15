@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	_, err := configs.LoadConfig(".")
+	configs, err := configs.LoadConfig(".")
 	if err != nil {
 		panic(err)
 	}
@@ -27,6 +27,8 @@ func main() {
 	db.AutoMigrate(&entity.Vehicle{}, &entity.Driver{})
 	vehicleDB := database.NewVehicle(db)
 	vehicleHandler := handlers.NewVehicleHandler(vehicleDB)
+	driverDB := database.NewDriver(db)
+	driverHandler := handlers.NewDriverHandler(driverDB, configs.TokenAuth, configs.JWTExperesIn)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -36,10 +38,12 @@ func main() {
 	r.Put("/vehicles/{id}", vehicleHandler.UpdateVehicle)
 	r.Delete("/vehicles/{id}", vehicleHandler.DeleteVehicle)
 
+	//	r.Post("/drivers", driverHandler.CreateDriver)
+	r.Post("/drivers/login", driverHandler.GetJWT)
+	r.Get("/drivers/{id}", vehicleHandler.GetVehicleById)
+	r.Put("/drivers/{id}", vehicleHandler.UpdateVehicle)
+	r.Delete("/drivers/{id}", vehicleHandler.DeleteVehicle)
+
 	http.ListenAndServe(":8080", r)
 
-}
-
-type DriverHandler struct {
-	DriverDB database.DriverInterface
 }

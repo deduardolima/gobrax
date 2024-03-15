@@ -30,14 +30,31 @@ func (v *Driver) FindByID(id string) (*entity.Driver, error) {
 	err := v.DB.Where("id = ?", id).Error
 	return &driver, err
 }
-func (d *Driver) GetAllDrivers() ([]entity.Driver, error) {
+func (d *Driver) FindAll(page, limit int, sort string) ([]entity.Driver, error) {
 	var drivers []entity.Driver
-	if err := d.DB.Find(&drivers).Error; err != nil {
-		return nil, err
+	var err error
+	if sort != "asc" && sort != "desc" {
+		sort = "asc"
 	}
-	return drivers, nil
+	orderQuery := "create_at " + sort
+
+	if page != 0 && limit != 0 {
+		err = d.DB.Limit(limit).Offset((page - 1) * limit).Order(orderQuery).Find(&drivers).Error
+	} else {
+		err = d.DB.Order(orderQuery).Find(&drivers).Error
+	}
+	return drivers, err
 }
 
+/*
+	func (d *Driver) GetAllDrivers() ([]entity.Driver, error) {
+		var drivers []entity.Driver
+		if err := d.DB.Find(&drivers).Error; err != nil {
+			return nil, err
+		}
+		return drivers, nil
+	}
+*/
 func (d *Driver) Update(driver *entity.Driver) error {
 	return d.DB.Save(driver).Error
 }
