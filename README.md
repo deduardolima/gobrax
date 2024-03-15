@@ -3,9 +3,9 @@
 GoBrax é uma aplicação Go que gerencia cadastro e vinculação entre motoristas e veículos, fornecendo um CRUD completo para ambas as entidades.
 
 ## Pré-Requisitos
-Docker
-Docker Compose
-Go (para desenvolvimento local sem Docker)
+- Docker
+- Docker Compose
+- Go (para desenvolvimento local sem Docker)
 
 ## Configuração
 ```
