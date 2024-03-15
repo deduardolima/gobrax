@@ -25,10 +25,12 @@ func (d *Driver) FindByEmail(email string) (*entity.Driver, error) {
 	return &driver, nil
 }
 
-func (v *Driver) FindByID(id string) (*entity.Driver, error) {
+func (d *Driver) FindByID(id string) (*entity.Driver, error) {
 	var driver entity.Driver
-	err := v.DB.Where("id = ?", id).Error
-	return &driver, err
+	if err := d.DB.Where("id = ?", id).First(&driver).Error; err != nil {
+		return nil, err
+	}
+	return &driver, nil
 }
 func (d *Driver) FindAll(page, limit int, sort string) ([]entity.Driver, error) {
 	var drivers []entity.Driver
@@ -36,7 +38,7 @@ func (d *Driver) FindAll(page, limit int, sort string) ([]entity.Driver, error) 
 	if sort != "asc" && sort != "desc" {
 		sort = "asc"
 	}
-	orderQuery := "create_at " + sort
+	orderQuery := "created_at " + sort
 
 	if page != 0 && limit != 0 {
 		err = d.DB.Limit(limit).Offset((page - 1) * limit).Order(orderQuery).Find(&drivers).Error
@@ -46,15 +48,6 @@ func (d *Driver) FindAll(page, limit int, sort string) ([]entity.Driver, error) 
 	return drivers, err
 }
 
-/*
-	func (d *Driver) GetAllDrivers() ([]entity.Driver, error) {
-		var drivers []entity.Driver
-		if err := d.DB.Find(&drivers).Error; err != nil {
-			return nil, err
-		}
-		return drivers, nil
-	}
-*/
 func (d *Driver) Update(driver *entity.Driver) error {
 	return d.DB.Save(driver).Error
 }

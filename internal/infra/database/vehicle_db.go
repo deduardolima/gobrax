@@ -23,19 +23,19 @@ func (v *Vehicle) FindAll(page, limit int, sort string) ([]entity.Vehicle, error
 	if sort != "asc" && sort != "desc" {
 		sort = "asc"
 	}
-	orderQuery := "create_at " + sort
+	orderQuery := "created_at " + sort
 
 	if page != 0 && limit != 0 {
 		err = v.DB.Limit(limit).Offset((page - 1) * limit).Order(orderQuery).Find(&vehicles).Error
 	} else {
-		err = v.DB.Order(orderQuery).Find(&vehicles).Error
+		err = v.DB.Preload("Driver").Order(orderQuery).Find(&vehicles).Error
 	}
 	return vehicles, err
 }
 
-func (v *Vehicle) FindByID(id string) (*entity.Vehicle, error) {
+func (db *Vehicle) FindByID(id string) (*entity.Vehicle, error) {
 	var vehicle entity.Vehicle
-	if err := v.DB.Where("id = ?", id).First(&vehicle).Error; err != nil {
+	if err := db.DB.Preload("Driver").First(&vehicle, "id = ?", id).Error; err != nil {
 		return nil, err
 	}
 	return &vehicle, nil

@@ -18,12 +18,13 @@ var (
 )
 
 type Vehicle struct {
-	ID       uuid.UUID `json:"id"`
-	Brand    string    `json:"brand"`
-	Model    string    `json:"model"`
-	Year     int       `json:"year"`
-	DriverID uuid.UUID `json:"driver_id"`
-	CreateAt time.Time `json:"created_at"`
+	ID        uuid.UUID `gorm:"type:uuid" json:"id"`
+	Brand     string    `json:"brand"`
+	Model     string    `json:"model"`
+	Year      int       `json:"year"`
+	DriverID  uuid.UUID `json:"driver_id"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
+	Driver    Driver    `gorm:"foreignKey:DriverID"`
 }
 
 func NewVehicle(brand, model string, year int, driverID uuid.UUID) (*Vehicle, error) {

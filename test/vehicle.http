@@ -4,36 +4,32 @@ Content-Type: application/json
 
 {
   "brand": "Scania",
-  "model": "RG20",
+  "model": "RG19",
   "year": 2013,
-  "driverid": "5d1sa5d1sa5d1sa5d1s5a"
+  "driver_id": "85766e20-7f14-4296-bf97-1b1846cd8d12"
 }
+
 
 ###
 GET  http://localhost:8080/vehicles  HTTP/1.1
 Content-Type: application/json
 
 ###
-GET  http://localhost:8080/vehicles/ HTTP/1.1
+GET  http://localhost:8080/vehicles/3d303445-2a92-4cdf-b60b-507e9de6d1e5 HTTP/1.1
 Content-Type: application/json
-
-{
-  "brand": "Scania",
-  "model": "RG20",
-  "year": 2013
-}
 
 
 ###
-PUT  http://localhost:8080/vehicles/ HTTP/1.1
+PUT  http://localhost:8080/vehicles/d981673a-13c2-4905-90b3-8b376d9194fd HTTP/1.1
 Content-Type: application/json
 
 {
   "brand": "Volvo",
   "model": "Upadate",
-  "year": 2016
+  "year": 2016,
+  "driver_id": "85766e20-7f14-4296-bf97-1b1846cd8d12"
 }
 
 ###
-DELETE http://localhost:8080/vehicles/  HTTP/1.1
+DELETE http://localhost:8080/vehicles/0ec15863-abbe-4128-9e13-5fb2e9aa366d  HTTP/1.1
 Content-Type: application/json

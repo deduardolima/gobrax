@@ -4,19 +4,5 @@ services:
     build: .
     ports:
       - "8080:8080"
-    depends_on:
-      - db
-    env_file: /cmd/server/.env
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: gobraxdb
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: root
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-volumes:
-  db_data:
+    env_file: ./cmd/server/.env
+

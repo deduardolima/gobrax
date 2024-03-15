@@ -3,8 +3,38 @@ POST http://localhost:8080/drivers HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Edu",
+  "name": "Edu Lima  ",
   "email": "edu@email.com",
-  "password": "123456",
+  "password": "123456"
  
 }
+###
+
+GET http://localhost:8080/drivers HTTP/1.1
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:8080/drivers/d52ee4d8-0190-4c30-a422-bac808752a02 HTTP/1.1
+Content-Type: application/json
+
+
+###
+
+PUT http://localhost:8080/drivers/11298bbc-f487-4a87-9d73-79666c395509 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Edu Alterado",
+  "email": "edu@email.com",
+  "password": "123456"
+ 
+}
+
+###
+
+DELETE  http://localhost:8080/drivers/d52ee4d8-0190-4c30-a422-bac808752a02 HTTP/1.1
+Content-Type: application/json
+
+

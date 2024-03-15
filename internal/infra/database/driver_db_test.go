@@ -97,6 +97,7 @@ func TestFindDriverByID(t *testing.T) {
 		// Sua lógica de asserção continua aqui...
 	}
 */
+
 func TestFindAllDrivers(t *testing.T) {
 	db := setupDatabase(t)
 

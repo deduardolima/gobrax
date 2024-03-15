@@ -19,7 +19,7 @@ func main() {
 		panic(err)
 	}
 
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("gobrax.db"), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
@@ -38,11 +38,12 @@ func main() {
 	r.Put("/vehicles/{id}", vehicleHandler.UpdateVehicle)
 	r.Delete("/vehicles/{id}", vehicleHandler.DeleteVehicle)
 
-	//	r.Post("/drivers", driverHandler.CreateDriver)
+	r.Post("/drivers", driverHandler.CreateDriver)
 	r.Post("/drivers/login", driverHandler.GetJWT)
-	r.Get("/drivers/{id}", vehicleHandler.GetVehicleById)
-	r.Put("/drivers/{id}", vehicleHandler.UpdateVehicle)
-	r.Delete("/drivers/{id}", vehicleHandler.DeleteVehicle)
+	r.Get("/drivers", driverHandler.GetDrivers)
+	r.Get("/drivers/{id}", driverHandler.GetDriverById)
+	r.Put("/drivers/{id}", driverHandler.UpdateDriver)
+	r.Delete("/drivers/{id}", driverHandler.DeleteDriver)
 
 	http.ListenAndServe(":8080", r)
 

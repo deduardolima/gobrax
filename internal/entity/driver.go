@@ -4,15 +4,24 @@ import (
 	"time"
 
 	"github.com/deduardo/gobrax/pkg/entity"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type Driver struct {
-	ID       entity.ID `json:"id"`
-	Name     string    `json:"name"`
-	Email    string    `json:"email"`
-	Password string    `json:"-"`
-	CreateAt time.Time `json:"created_at"`
+	ID        entity.ID `gorm:"type:uuid;primary_key;" json:"id"`
+	Name      string    `json:"name"`
+	Email     string    `json:"email"`
+	Password  string    `json:"-"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
+}
+
+func (driver *Driver) BeforeCreate(tx *gorm.DB) (err error) {
+	if driver.ID == uuid.Nil {
+		driver.ID = entity.NewID()
+	}
+	return
 }
 
 func NewDriver(name, email, password string) (*Driver, error) {
