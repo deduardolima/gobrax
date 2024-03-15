@@ -77,27 +77,6 @@ func TestFindDriverByID(t *testing.T) {
 	assert.Equal(t, expected.ID, driver.ID)
 }
 
-/*
-	func TestGetAllDrivers(t *testing.T) {
-		db := setupDatabase(t)
-		repo := database.NewDriver(db)
-
-		expected1 := entity.Driver{ID: uuid.New(), Name: "Driver 1", Email: "driver1@email.com", Password: "123456"}
-		expected2 := entity.Driver{ID: uuid.New(), Name: "Driver 2", Email: "driver2@email.com", Password: "123"}
-		expected3 := entity.Driver{ID: uuid.New(), Name: "Driver 3", Email: "driver3@email.com", Password: "123789"}
-
-		_ = db.Create(&expected1)
-		_ = db.Create(&expected2)
-		_ = db.Create(&expected3)
-
-		drivers, err := repo.GetAllDrivers()
-		assert.NoError(t, err)
-		assert.Len(t, drivers, 3)
-
-		// Sua lógica de asserção continua aqui...
-	}
-*/
-
 func TestFindAllDrivers(t *testing.T) {
 	db := setupDatabase(t)
 
